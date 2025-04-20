@@ -89,7 +89,7 @@ export default class Framebuffer {
     const framebuffer = gl.createFramebuffer() as WebGLFramebuffer;
     gl.bindFramebuffer(gl.FRAMEBUFFER, framebuffer);
     gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.COLOR_ATTACHMENT0, gl.TEXTURE_2D, colorTexture, 0);
-    gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, depthTexture, 0);
+    // gl.framebufferTexture2D(gl.FRAMEBUFFER, gl.DEPTH_ATTACHMENT, gl.TEXTURE_2D, depthTexture, 0);
 
     const depthP5Texture = new RawTextureWrapper(this._renderer, depthTexture, width * density, height * density)
     this._renderer.textures.set('depthP5Texture', depthP5Texture)
