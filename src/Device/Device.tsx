@@ -146,10 +146,13 @@ export default function Device({mounted, setMounted, cartridgeSettled, triggerMo
 
   function handlePrevClick() {
     stopSong()
+    const wasPlaying = isPlaying()
+    setIsPlaying(false)
     setTimeout(async () => {
       setSongIndex(current => Math.max(current - 1, 0))
       await loadSongFromCartridge(songIndex())
-      if (isPlaying()) setTimeout(() => playSong(playNextIfPlaying))
+      if (wasPlaying) setTimeout(() => playSong(playNextIfPlaying))
+      setIsPlaying(wasPlaying)
     })
   }
 
@@ -166,10 +169,13 @@ export default function Device({mounted, setMounted, cartridgeSettled, triggerMo
 
   function handleNextClick() {
     stopSong()
+    const wasPlaying = isPlaying()
+    setIsPlaying(false)
     setTimeout(async () => {
       setSongIndex(current => Math.min(current + 1, lofiAMeta.tracks.length - 1))
       await loadSongFromCartridge(songIndex())
-      if (isPlaying()) setTimeout(() => playSong(playNextIfPlaying))
+      if (wasPlaying) setTimeout(() => playSong(playNextIfPlaying))
+      setIsPlaying(wasPlaying)
     })
   }
 
