@@ -1,0 +1,45 @@
+{
+  "name": "lo-fi chill (a)",
+  "tracks": [
+    {
+      "name": "Track 01",
+      "duration": 188,
+      "file": "lofi-a-1.wav.mp3"
+    },
+    {
+      "name": "Track 02",
+      "duration": 174,
+      "file": "lofi-a-2.wav.mp3"
+    },
+    {
+      "name": "Track 03",
+      "duration": 123,
+      "file": "lofi-a-3.wav.mp3"
+    },
+    {
+      "name": "Track 04",
+      "duration": 164,
+      "file": "lofi-a-4.wav.mp3"
+    },
+    {
+      "name": "Track 05",
+      "duration": 156,
+      "file": "lofi-a-5.wav.mp3"
+    },
+    {
+      "name": "Track 06",
+      "duration": 139,
+      "file": "lofi-a-6.wav.mp3"
+    },
+    {
+      "name": "Track 07",
+      "duration": 172,
+      "file": "lofi-a-7.wav.mp3"
+    },
+    {
+      "name": "Track 08",
+      "duration": 162,
+      "file": "lofi-a-8.wav.mp3"
+    }
+  ]
+}

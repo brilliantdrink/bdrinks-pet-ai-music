@@ -1,0 +1,231 @@
+@use '../Device/device.module' as device;
+
+$size: max(#{device.$width}, #{device.$height});
+$width: calc(.16 * #{$size});
+$height: calc(.19 * #{$size});
+
+.slider {
+  position: absolute;
+  $offset: 3rem;
+  top: calc(#{device.$height} - #{$offset});
+
+  width: 100rem;
+  height: calc(#{$height});
+
+  .wrapper {
+    position: relative;
+
+    width: calc(#{$width} * 1.4);
+    height: calc(#{$height});
+
+    margin: 0 5rem;
+
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .info {
+    position: absolute;
+    left: calc(-100% + 2rem);
+
+    background: linear-gradient(160deg, #777, white, #444);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+
+    font-weight: 400;
+    letter-spacing: .05ch;
+    opacity: .9;
+
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+
+    p {
+      margin: 0;
+    }
+
+    .title {
+      font-weight: 700;
+      font-stretch: expanded;
+    }
+
+    small {
+      font-weight: 300;
+      color: #666;
+    }
+
+    table {
+      font-variant-numeric: tabular-nums;
+
+      td {
+        padding: 0;
+        height: 1.4em;
+
+        &:first-child {
+          width: 16ch;
+        }
+      }
+    }
+  }
+
+  .cartridge {
+    //left: calc((100rem - #{$width}) / 2);
+    width: $width;
+    height: $height;
+
+    background: url('../images/cartridge.webp') center / contain no-repeat, url('../images/lofi1.png') 50.5% 54% / 63% no-repeat;
+    transform: scale(1.4);
+    animation-fill-mode: both;
+
+    &.placeholder {
+      position: relative;
+      background-image: url('../images/cartridge-placeholder.svg');
+      opacity: .3;
+
+      &:after {
+        position: absolute;
+        content: 'coming soon';
+        font-stretch: expanded;
+        text-transform: uppercase;
+        top: 50%;
+        left: 50%;
+
+        text-align: center;
+
+        transform: translate(-50%, -50%);
+      }
+    }
+
+    //&.out, &.in {
+    //  position: absolute;
+    //  top: 0;
+    //  left: 0/*calc((100rem - #{$width}) / 2)*/;
+    //}
+
+    &.out {
+      animation: {
+        name: eject;
+        duration: 1.5s;
+        timing-function: cubic-bezier(.3, 0, .2, 1);
+      };
+    }
+
+    &.in {
+      animation: {
+        name: mount;
+        duration: 1s;
+        timing-function: cubic-bezier(.4, 0, .4, 1);
+      };
+    }
+
+    @keyframes mount {
+      0% {
+        transform: scale(1.4);
+      }
+
+      50% {
+        transform: scale(1) translate(11rem, calc(-7.5rem + #{$offset} - #{device.$offset-y}));
+      }
+
+      89% {
+        transform: scale(1) translate(11rem, calc(-13rem + #{$offset} - #{device.$offset-y}));
+      }
+
+      90% {
+        transform: scale(1) translate(11rem, calc(-13rem + #{$offset} - #{device.$offset-y}));
+      }
+
+      100% {
+        transform: scale(1) translate(11rem, calc(-14rem + #{$offset} - #{device.$offset-y}));
+      }
+    }
+
+    @keyframes eject {
+      0% {
+        transform: scale(1) translate(11rem, calc(-14rem + #{$offset} - #{device.$offset-y}));
+      }
+
+      10% {
+        transform: scale(1) translate(11rem, calc(-13.9rem + #{$offset} - #{device.$offset-y}));
+      }
+
+      30% {
+        transform: scale(1) translate(11rem, calc(-7.5rem + #{$offset} - #{device.$offset-y}));
+      }
+
+      100% {
+        transform: scale(1.4);
+      }
+    }
+  }
+}
+
+.button {
+  $width: 8rem;
+
+  position: absolute;
+  left: calc((100rem - #{$width}) / 2);
+  bottom: 4rem;
+  padding: 0;
+
+  width: $width;
+  height: 2.5rem;
+
+  appearance: none;
+  border: 2px solid transparentize(white, .5);
+  background: transparent;
+  color: white;
+  border-radius: 5rem;
+
+  font-size: .8rem;
+  font-family: inherit;
+  font-stretch: expanded;
+  text-transform: uppercase;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  cursor: pointer;
+
+  transition: opacity .3s ease;
+
+  &.hide {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+.prev, .next {
+  position: absolute;
+  $size: 3.5rem;
+  height: $size;
+  width: $size;
+
+  top: calc(#{$height} / 2 - #{$size} / 2);
+
+  $deviation: 1.5rem;
+  $offset: 0.1rem;
+  $color: black;
+  filter: drop-shadow(#{$offset} #{$offset} $deviation $color) drop-shadow(-#{$offset} #{$offset} $deviation $color) drop-shadow(#{$offset} -#{$offset} $deviation $color) drop-shadow(-#{$offset} -#{$offset} $deviation $color);
+  opacity: 1;
+
+  transition: opacity .5s ease;
+
+  cursor: pointer;
+
+  &.disabled {
+    pointer-events: none;
+    opacity: 0;
+  }
+}
+
+.prev {
+  left: 16rem
+}
+
+.next {
+  right: 16rem
+}

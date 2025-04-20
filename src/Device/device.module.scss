@@ -1,0 +1,193 @@
+$width: 70rem;
+$height: 40rem;
+$offset-y: 4rem;
+
+.note {
+  position: absolute;
+  left: 8rem;
+  top: 8rem;
+
+  $size: 40;
+  width: $size * 1rem;
+  height: $size * .5rem;
+
+  background: url('../images/notes-manual.webp') center / contain no-repeat;
+  filter: brightness(.7);
+  transform: rotate(-8deg);
+}
+
+.device {
+  position: absolute;
+  right: -5rem;
+  top: -$offset-y;
+
+  width: $width;
+  height: $height;
+
+  background-image: url('../images/device.webp');
+  background-size: cover;
+  background-position: center 40%;
+
+  filter: contrast(110%);
+
+  $size: 6rem;
+  mask: linear-gradient(90deg, transparent, black) top left,
+  radial-gradient(farthest-side at top right, black, transparent) bottom left,
+  linear-gradient(0deg, transparent, black) bottom right,
+  linear-gradient(0deg, black, black) top right;
+  mask-size: $size calc(100% - #{$size}), $size $size, calc(100% - #{$size}) $size, calc(100% - #{$size}) calc(100% - #{$size});
+  mask-repeat: no-repeat;
+
+  &.play, &.prev, &.next {
+    opacity: 0;
+    mask: none;
+    pointer-events: none;
+
+    transition-timing-function: linear;
+    transition-duration: 0s;
+    transition-delay: .1s;
+    transition-property: opacity;
+
+    &.pressed {
+      opacity: 1;
+      transition-delay: 0s;
+    }
+  }
+
+  &.play {
+    background-image: url('../images/play-pressed.webp');
+  }
+
+  &.prev {
+    background-image: url('../images/prev-pressed.webp');
+  }
+
+  &.next {
+    background-image: url('../images/next-pressed.webp');
+  }
+}
+
+.textCanvasWrapper {
+  position: absolute;
+  right: -5rem;
+  top: 0;
+
+  width: $width;
+  height: $height;
+
+  mix-blend-mode: screen;
+
+  pointer-events: none;
+
+  canvas {
+    position: absolute;
+    $size: max($height, $width);
+
+    right: calc(#{$width} * ((4320 - 1560) / 2 / 4320));
+    top: calc(50% - #{$size} * (290 / 4320) - #{$offset-y});
+
+    width: calc($size * (1560 / 4320)) !important;
+    height: calc($size * (470 / 4320)) !important;
+    object-fit: contain;
+  }
+}
+
+.invisible {
+  opacity: 0;
+}
+
+.button {
+  cursor: pointer;
+
+  &.play, &.next, &.prev {
+    position: absolute;
+    top: 20rem;
+    height: 5rem;
+    width: 5rem;
+  }
+
+  &.play {
+    right: 27.7rem;
+  }
+
+  &.prev {
+    right: 22.3rem;
+  }
+
+  &.next {
+    right: 16.9rem;
+  }
+
+  $button: &;
+
+  &.invisible.eject {
+    position: absolute;
+    top: 27rem;
+    right: 34rem;
+    height: 8rem;
+    width: 10rem;
+
+    transition: opacity .2s ease;
+
+    &.hide {
+      pointer-events: none;
+      visibility: hidden;
+      cursor: default;
+    }
+
+    &:hover + #{$button}.eject:not(.invisible) {
+      color: white;
+
+      &.hide {
+        opacity: 0;
+      }
+    }
+  }
+
+  &.eject:not(.invisible) {
+    position: absolute;
+    top: 36rem;
+    $width: 7rem;
+    $height: 1.2rem;
+    right: 34rem + (10rem - $width) * .5;
+    width: $width;
+    height: $height;
+
+    appearance: none;
+    font-family: inherit;
+    font-size: .7rem;
+    text-transform: lowercase;
+    color: transparentize(white, .4);
+    background: none;
+    border: none;
+    opacity: 1;
+
+    z-index: -2;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: .4rem;
+
+    transition: opacity .3s .5s ease, color .3s ease;
+
+    &:hover {
+      color: white;
+    }
+
+    &.hide {
+      pointer-events: none;
+      opacity: 0;
+      transition-delay: 0s;
+    }
+
+    svg {
+      position: relative;
+      bottom: .01rem;
+      height: $height;
+      width: $height;
+      background: transparentize(white, .7);
+      border-radius: 50%;
+    }
+  }
+}
