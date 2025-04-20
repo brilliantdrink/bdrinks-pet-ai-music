@@ -115,21 +115,22 @@ export default function Device({mounted, setMounted, cartridgeSettled, triggerMo
     triggerMountButtonsEdge()
   }
 
-  async function playNext() {
+  async function playNextIfPlaying() {
+    if (!isPlaying()) return
     if (songIndex() === lofiAMeta.tracks.length - 1) {
       stopSong()
       return
     }
     setSongIndex(current => Math.min(current + 1, lofiAMeta.tracks.length))
     await loadSongFromCartridge(songIndex())
-    setTimeout(() => playSong(playNext))
+    setTimeout(() => playSong(playNextIfPlaying))
   }
 
   function handlePlayPause() {
     if (mounted() && cartridgeSettled()) {
       setIsPlaying(current => {
         if (current) pauseSong()
-        else playSong(playNext)
+        else playSong(playNextIfPlaying)
         return !current
       })
     } else {
@@ -148,7 +149,7 @@ export default function Device({mounted, setMounted, cartridgeSettled, triggerMo
     setTimeout(async () => {
       setSongIndex(current => Math.max(current - 1, 0))
       await loadSongFromCartridge(songIndex())
-      if (isPlaying()) setTimeout(() => playSong(playNext))
+      if (isPlaying()) setTimeout(() => playSong(playNextIfPlaying))
     })
   }
 
@@ -160,7 +161,7 @@ export default function Device({mounted, setMounted, cartridgeSettled, triggerMo
   function handleSkipRelease() {
     setIsSkipping(false)
     stopSkipping()
-    if (isPlaying()) playSong(playNext)
+    if (isPlaying()) playSong(playNextIfPlaying)
   }
 
   function handleNextClick() {
@@ -168,7 +169,7 @@ export default function Device({mounted, setMounted, cartridgeSettled, triggerMo
     setTimeout(async () => {
       setSongIndex(current => Math.min(current + 1, lofiAMeta.tracks.length - 1))
       await loadSongFromCartridge(songIndex())
-      if (isPlaying()) setTimeout(() => playSong(playNext))
+      if (isPlaying()) setTimeout(() => playSong(playNextIfPlaying))
     })
   }
 

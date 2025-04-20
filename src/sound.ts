@@ -7,7 +7,7 @@ const AudioContext = window.AudioContext || window.webkitAudioContext;
 const audioContext = new AudioContext();
 const songContext = new AudioContext();
 const songGainNode = songContext.createGain();
-songGainNode.gain.value = .1;
+songGainNode.gain.value = .8;
 
 function loadAudio(url: string) {
   return fetch(url)
