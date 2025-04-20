@@ -116,7 +116,7 @@ export default function Device({mounted, setMounted, cartridgeSettled, triggerMo
   }
 
   async function playNextIfPlaying() {
-    if (!isPlaying()) return
+    if (!isPlaying() || isSkipping()) return
     if (songIndex() === lofiAMeta.tracks.length - 1) {
       stopSong()
       return
